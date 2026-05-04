@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    /* ===============================
+       Estrutura do Projeto
+    =============================== */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* ===============================
+       Ambiente Node.js + TypeScript
+    =============================== */
+    "target": "ES2020",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"],
+
+    /* ===============================
+       Geração de Arquivos
+    =============================== */
+    "sourceMap": true,
+
+    /* ===============================
+       Segurança e Tipagem Forte
+    =============================== */
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    /* ===============================
+       Compatibilidade
+    =============================== */
+    "skipLibCheck": true,
+
+    /* ===============================
+       Importações Modernas
+    =============================== */
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+
+    /* ===============================
+       Detecção de módulos
+    =============================== */
+    "moduleDetection": "force"
+  },
+
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}
