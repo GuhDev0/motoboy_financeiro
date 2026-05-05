@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "dev": "tsx watch src/server.ts",
-  "studio": "prisma studio",
-  "dev:all": "concurrently \"npm run dev\" \"npm run studio\""
-},
+    "dev": "tsx watch src/server.ts",
+    "studio": "prisma studio",
+    "dev:all": "concurrently \"npm run dev\" \"npm run studio\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

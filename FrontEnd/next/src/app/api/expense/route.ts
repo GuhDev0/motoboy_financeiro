@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
     }
 
-    const response = await fetch(ENDPOINTS.GAIN_REGISTER, {
+    const response = await fetch(ENDPOINTS.EXPENSE_REGISTER, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,12 +29,12 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.mensagem || "Erro ao registrar ganho" },
+        { error: data.mensagem || "Erro ao registrar despesa" },
         { status: response.status }
       );
     }
 
-    return NextResponse.json({ mensagem: "Ganho registrado com sucesso" });
+    return NextResponse.json({ mensagem: "Despesa registrada com sucesso" });
   } catch (error: any) {
     return NextResponse.json({ erro: error.message }, { status: 500 });
   }
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
     const url = new URL(request.url);
     const search = url.searchParams.get("search")?.trim().toLowerCase() ?? "";
 
-    const response = await fetch(ENDPOINTS.GAIN_LIST, {
+    const response = await fetch(ENDPOINTS.EXPENSE_LIST, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -61,20 +61,20 @@ export async function GET(request: NextRequest) {
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: data.mensagem || "Erro ao buscar ganhos" },
+        { error: data.mensagem || "Erro ao buscar despesas" },
         { status: response.status }
       );
     }
 
-    let gains = data.Gains ?? data.gains ?? [];
+    let expenses = data.expenses ?? data.Expenses ?? [];
 
     if (search) {
-      gains = gains.filter((gain: any) => {
+      expenses = expenses.filter((expense: any) => {
         const normalized = [
-          gain.description,
-          gain.platform,
-          gain.date,
-          gain.value,
+          expense.description,
+          expense.category,
+          expense.date,
+          expense.value,
         ]
           .filter(Boolean)
           .join(" ")
@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    return NextResponse.json({ gains });
+    return NextResponse.json({ expenses });
   } catch (error: any) {
     return NextResponse.json({ erro: error.message }, { status: 500 });
   }

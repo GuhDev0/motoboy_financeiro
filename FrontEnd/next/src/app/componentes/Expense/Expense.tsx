@@ -1,126 +1,166 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { api } from "@/src/services/api";
+import "./expense.css";
 
 type Expense = {
-    description: string;
-    value: number;
-    date: string;
-    category: "GASOLINA" | "MANUTENCAO" | "ALIMENTACAO" | "OUTROS";
-    userId: number;
+  id: number;
+  description: string;
+  value: number;
+  date: string;
+  category: "GASOLINA" | "MANUTENCAO" | "ALIMENTACAO" | "OUTROS";
+  userId: number;
 };
 
 export default function Expense() {
-    
-    const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [form, setForm] = useState<Partial<Expense>>({
+    description: "", value: 0, date: "", category: "OUTROS", userId: 0,
+  });
+  const [search, setSearch]       = useState("");
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [message, setMessage]     = useState("");
 
-    
-    const [form, setForm] = useState<Expense>({
-        description: "",
-        value: 0,
-        date: "",
-        category: "OUTROS",
-        userId: 0,
-    });
+  useEffect(() => { fetchExpenses(); }, []);
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
-        const { name, value } = e.target;
-
-        setForm((prev) => ({
-            ...prev,
-            [name]: name === "value" ? Number(value) : value,
-        }));
+  async function fetchExpenses(searchTerm = "") {
+    try {
+      const response = await api.get("/expense", {
+        params: searchTerm ? { search: searchTerm } : undefined,
+      });
+      setExpenses(response.data.expenses ?? []);
+    } catch (error) {
+      console.error("Erro ao buscar despesas:", error);
     }
+  }
 
-    function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: name === "value" ? Number(value) : value }));
+  }
 
-        setExpenses((prev) => [...prev, form]);
-
-
-        setForm({
-            description: "",
-            value: 0,
-            date: "",
-            category: "OUTROS",
-            userId: 0,
-        });
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      if (editingId) {
+        await api.put(`/expense/${editingId}`, form);
+        setMessage("Despesa atualizada com sucesso.");
+      } else {
+        await api.post("/expense", form);
+        setMessage("Despesa registrada com sucesso.");
+      }
+      setForm({ description: "", value: 0, date: "", category: "OUTROS", userId: 0 });
+      setEditingId(null);
+      await fetchExpenses(search);
+    } catch {
+      setMessage("Erro ao salvar despesa.");
     }
-    function handleRemove(index: number) {
-        setExpenses((prev) => prev.filter((_, i) => i !== index));
-    
+  }
+
+  async function handleDelete(id: number) {
+    try {
+      await api.delete(`/expense/${id}`);
+      setExpenses((prev) => prev.filter((e) => e.id !== id));
+      setMessage("Despesa excluída com sucesso.");
+    } catch {
+      setMessage("Erro ao excluir despesa.");
     }
-    return (
-        <div className="expense_container">
-            <header>
-                <h1>Despesas</h1>
+  }
 
-                <form onSubmit={handleSubmit}>
-                   
+  function handleEdit(expense: Expense) {
+    setEditingId(expense.id);
+    setForm({ ...expense });
+    setMessage("Modo edição ativado.");
+  }
 
-                    <input
-                        type="number"
-                        name="value"
-                        placeholder="Valor"
-                        value={form.value}
-                        onChange={handleChange}
-                        
-                    />
+  return (
+    <div className="expense_container">
+      <header>
+        <h1>Despesas</h1>
+        <p className="expense_page-subtitle">Registre e gerencie todas as suas saídas financeiras</p>
 
-                    <input
-                        type="date"
-                        name="date"
-                        value={form.date}
-                        onChange={handleChange}
-                    />
-
-                    <select name="category" id="" value={form.category} onChange={handleChange}>
-                        <option value="GASOLINA">GASOLINA</option>
-                        <option value="MANUTENCAO">MANUTENCAO</option>
-                        <option value="ALIMENTACAO">ALIMENTACAO</option>
-                        <option value="OUTROS">OUTROS</option>
-                    </select>
-                     <input
-                        type="text"
-                        name="description"
-                        placeholder="Descrição"
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                    <button type="submit">Adicionar</button>
-                </form>
-            </header>
-
-            <main>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Valor</th>
-                            <th>Data</th>
-                            <th>Categoria</th>
-                             <th>Descrição</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        { expenses.length > 0 ? (
-                            expenses.map((expense, index) => (
-                                <tr key={index}>
-
-                                    <td>R$ {expense.value}</td>
-                                    <td>{expense.date}</td>
-                                    <td>{expense.category}</td>
-                                    <td>{expense.description}</td>
-                                    <button onClick={() => handleRemove(index)}>Remover</button>
-                                </tr>
-                            ) )
-                        ) : (
-                            <tr>
-                                <td colSpan={4}>Nenhuma despesa registrada.</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-            </main>
+        {/* Busca */}
+        <div className="expense_actions">
+          <input
+            type="text"
+            placeholder="🔍  Buscar despesas..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && fetchExpenses(search)}
+          />
+          <button className="btn-search" type="button" onClick={() => fetchExpenses(search)}>
+            Buscar
+          </button>
+          <button className="btn-clear" type="button" onClick={() => { setSearch(""); fetchExpenses(); }}>
+            Limpar
+          </button>
         </div>
-    );
+
+        {/* Formulário */}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="number"
+            name="value"
+            placeholder="Valor (R$)"
+            value={form.value ?? 0}
+            onChange={handleChange}
+          />
+          <input
+            type="date"
+            name="date"
+            value={form.date ?? ""}
+            onChange={handleChange}
+          />
+          <select name="category" value={form.category ?? "OUTROS"} onChange={handleChange}>
+            <option value="GASOLINA">⛽ Gasolina</option>
+            <option value="MANUTENCAO">🔧 Manutenção</option>
+            <option value="ALIMENTACAO">🍔 Alimentação</option>
+            <option value="OUTROS">📦 Outros</option>
+          </select>
+          <input
+            type="text"
+            name="description"
+            placeholder="Descrição"
+            value={form.description ?? ""}
+            onChange={handleChange}
+          />
+          <button type="submit">{editingId ? "✓ Atualizar" : "+ Adicionar"}</button>
+        </form>
+
+        {message && <p className="expense_message">{message}</p>}
+      </header>
+
+      <main>
+        <table>
+          <thead>
+            <tr>
+              <th>Valor</th>
+              <th>Data</th>
+              <th>Categoria</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.length > 0 ? (
+              expenses.map((expense) => (
+                <tr key={expense.id}>
+                  <td>R$ {expense.value.toFixed(2)}</td>
+                  <td>{new Date(expense.date).toLocaleDateString("pt-BR")}</td>
+                  <td><span className="badge-category">{expense.category}</span></td>
+                  <td>{expense.description}</td>
+                  <td>
+                    <button className="btn-edit"   type="button" onClick={() => handleEdit(expense)}>Editar</button>
+                    <button className="btn-delete" type="button" onClick={() => handleDelete(expense.id)}>Excluir</button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr><td className="table-empty" colSpan={5}>Nenhuma despesa registrada.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </main>
+    </div>
+  );
 }

@@ -3,8 +3,6 @@ import express from "express";
 import router from "./Router/router.js";
 import cors from "cors";
 
-
-
 const app = express();
 
 /* ===============================

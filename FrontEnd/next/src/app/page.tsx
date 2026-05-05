@@ -4,8 +4,7 @@ import Login from "./Login/page";
 
 
 export default function Home() {
-  return (
-      
+  return (  
     <main>
       <Login />
     </main>

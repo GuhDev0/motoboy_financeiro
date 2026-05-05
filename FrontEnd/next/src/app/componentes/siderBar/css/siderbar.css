@@ -1,0 +1,225 @@
+/* ================================================================
+   SIDEBAR — Financeiro MotoBoy (Design System integrado)
+   ================================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=DM+Sans:wght@400;500&display=swap');
+
+/* ── LAYOUT RAIZ ─────────────────────────── */
+.app-layout {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+.sidebar {
+  width: var(--sidebar-width);
+  min-height: 100dvh;
+  background: var(--c-sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 100;
+
+  box-shadow: var(--shadow-md);
+}
+
+/* decoração leve */
+.sidebar::before,
+.sidebar::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.sidebar::before {
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sidebar::after {
+  bottom: 80px;
+  left: -40px;
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* ── CONTEÚDO ───────────────────────────── */
+.sidebar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  overflow-y: auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HEADER ──────────────────────────────── */
+.sidebar-header {
+  margin-bottom: var(--space-8);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.sidebar-subtitle {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-sidebar-text);
+  opacity: 0.7;
+  margin-bottom: var(--space-2);
+}
+
+.sidebar-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--c-text-white);
+  margin-bottom: var(--space-2);
+}
+
+.sidebar-description {
+  font-size: var(--text-xs);
+  color: var(--c-sidebar-text);
+  opacity: 0.6;
+}
+
+/* ── NAV ─────────────────────────────────── */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--r-md);
+  color: var(--c-sidebar-text);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-link:hover {
+  background: var(--c-sidebar-hover);
+  color: var(--c-text-white);
+  transform: translateX(2px);
+}
+
+.sidebar-link.active {
+  background: var(--c-sidebar-active);
+  color: var(--c-text-white);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+}
+
+.sidebar-icon {
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-text {
+  flex: 1;
+}
+
+.sidebar-arrow {
+  font-size: var(--text-xs);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: var(--transition);
+  color: rgba(255,255,255,0.6);
+}
+
+.sidebar-link:hover .sidebar-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── FOOTER ─────────────────────────────── */
+.sidebar-footer {
+  padding: var(--space-6);
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.logout-button {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--r-md);
+  color: var(--c-text-white);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: var(--transition);
+}
+
+.logout-button:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+/* ── MOBILE ─────────────────────────────── */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 200;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  background: var(--c-primary);
+  border: none;
+  color: white;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 99;
+}
+
+/* ── RESPONSIVO ─────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-overlay.open {
+    display: block;
+  }
+}

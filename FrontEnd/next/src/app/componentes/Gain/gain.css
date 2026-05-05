@@ -1,0 +1,289 @@
+/* ================================================================
+   GAIN PAGE — gain.css
+   Todas as cores vêm do :root em globals.css — zero hardcoded.
+   ================================================================ */
+
+/* ── CONTAINER ───────────────────────────── */
+.gain_container {
+  padding: var(--space-8) var(--space-8);
+  max-width: 1100px;
+  margin: 0 auto;
+  animation: pageIn 0.3s ease both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HEADER ──────────────────────────────── */
+.gain_container header {
+  margin-bottom: var(--space-8);
+}
+
+.gain_container header h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--c-text-heading);
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-1);
+}
+
+.gain_page-subtitle {
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+/* ── BARRA DE BUSCA ──────────────────────── */
+.gain_actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-6);
+}
+
+.gain_actions input[type="text"] {
+  flex: 1;
+  min-width: 200px;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  background: var(--c-surface);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-pill);
+  color: var(--c-text-heading);
+  outline: none;
+  transition: var(--transition);
+  box-shadow: var(--shadow-xs);
+}
+
+.gain_actions input[type="text"]::placeholder {
+  color: var(--c-text-muted);
+}
+
+.gain_actions input[type="text"]:focus {
+  border-color: var(--c-gain);
+  box-shadow: 0 0 0 3px var(--c-gain-light);
+}
+
+.gain_actions .btn-search {
+  padding: var(--space-3) var(--space-5);
+  background: var(--c-gain);
+  color: var(--c-text-white);
+  border: none;
+  border-radius: var(--r-pill);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 2px 8px var(--c-gain-shadow);
+}
+
+.gain_actions .btn-search:hover {
+  background: var(--c-gain-hover);
+  transform: translateY(-1px);
+}
+
+.gain_actions .btn-clear {
+  padding: var(--space-3) var(--space-5);
+  background: var(--c-surface);
+  color: var(--c-text-body);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.gain_actions .btn-clear:hover {
+  border-color: var(--c-primary);
+  color: var(--c-primary);
+}
+
+/* ── FORMULÁRIO ──────────────────────────── */
+.gain_container form {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-4);
+  align-items: end;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-4);
+}
+
+.gain_container form input,
+.gain_container form select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  background: var(--c-surface-2);
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-sm);
+  color: var(--c-text-heading);
+  outline: none;
+  transition: var(--transition);
+}
+
+.gain_container form input::placeholder {
+  color: var(--c-text-muted);
+}
+
+.gain_container form input:focus,
+.gain_container form select:focus {
+  border-color: var(--c-gain);
+  background: var(--c-surface);
+  box-shadow: 0 0 0 3px var(--c-gain-light);
+}
+
+.gain_container form select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239ca3af'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.gain_container form button[type="submit"] {
+  padding: var(--space-3) var(--space-6);
+  background: var(--c-gain);
+  color: var(--c-text-white);
+  border: none;
+  border-radius: var(--r-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 2px 10px var(--c-gain-shadow-btn);
+  white-space: nowrap;
+}
+
+.gain_container form button[type="submit"]:hover {
+  background: var(--c-gain-hover);
+  transform: translateY(-1px);
+}
+
+/* ── MENSAGEM ────────────────────────────── */
+.gain_message {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--c-gain-light);
+  color: var(--c-gain);
+  border-radius: var(--r-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  border: 1px solid var(--c-gain-shadow);
+}
+
+/* ── TABELA ──────────────────────────────── */
+.gain_container main {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.gain_container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.gain_container thead {
+  background: var(--c-surface-2);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.gain_container th {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  white-space: nowrap;
+}
+
+.gain_container td {
+  padding: var(--space-4) var(--space-5);
+  color: var(--c-text-body);
+  border-bottom: 1px solid var(--c-border);
+  vertical-align: middle;
+}
+
+.gain_container tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.gain_container tbody tr {
+  transition: var(--transition-fast);
+}
+
+.gain_container tbody tr:hover {
+  background: var(--c-surface-2);
+}
+
+.gain_container td:first-child {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--c-gain);
+  font-size: var(--text-base);
+}
+
+.badge-platform {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-3);
+  border-radius: var(--r-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  background: var(--c-gain-light);
+  color: var(--c-gain);
+  letter-spacing: 0.04em;
+}
+
+.gain_container td:last-child {
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* ── VAZIO ───────────────────────────────── */
+.table-empty-gain {
+  text-align: center;
+  padding: var(--space-12) !important;
+  color: var(--c-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* ── RESPONSIVO ──────────────────────────── */
+@media (max-width: 900px) {
+  .gain_container {
+    padding: var(--space-6) var(--space-4);
+  }
+  .gain_container form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .gain_container form {
+    grid-template-columns: 1fr;
+  }
+  .gain_container table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .gain_container header h1 {
+    font-size: var(--text-2xl);
+  }
+}

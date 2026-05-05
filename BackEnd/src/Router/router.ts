@@ -3,20 +3,20 @@ import { UserController } from "../Controller/user.controller.js";
 import { AutheController } from "../Controller/auth.controller.js";
 import { GainController } from "../Controller/gain.controller.js";
 import { ExpenseController } from "../Controller/expense.controller.js";
-
+import { AnaliseController } from "../Controller/analise.controller.js";
 const router = Router();
 const userController = new UserController();
 const autheController = new AutheController();
 const gainController = new GainController();
 const expenseController = new ExpenseController();
-
+const analiseController = new AnaliseController();
 /* ===============================
     Rotas
 =============================== */
 
 router.post("/login", autheController.login);
 
-router.get("/createdUser", userController.createUser);
+router.post("/createdUser", userController.createUser);
 router.delete(
   "/deleteUser/:id",
   autheController.authentication,
@@ -73,6 +73,12 @@ router.delete(
   "/deleteExpense/:id",
   autheController.authentication,
   expenseController.deleteExpense
+);
+
+router.get(
+  "/analise",
+  autheController.authentication,
+  analiseController.analise
 );
 
 export default router;

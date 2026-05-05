@@ -40,8 +40,8 @@ export class ExpenseController {
     }
 
     try {
-      await this.expenseService.getAllExpenses(authenticatedUser.id);
-      return res.status(200).json({ mensagem: "Busca de despesas concluída" });
+      const expenses = await this.expenseService.getAllExpenses(authenticatedUser.id);
+      return res.status(200).json({ mensagem: "Busca de despesas concluída", expenses });
     } catch (error: any) {
       return res.status(500).json({
         mensagem: "Erro ao buscar despesas",
