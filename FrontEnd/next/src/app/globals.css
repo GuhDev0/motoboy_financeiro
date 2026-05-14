@@ -1,48 +1,79 @@
+/* ================================================================
+   🎨 DESIGN SYSTEM — TOKENS GLOBAIS
+   Financeiro MotoBoy — CSS Puro, Light Mode, 100% Responsivo
+   Importe este arquivo UMA vez no layout raiz.
+   Todos os arquivos CSS do projeto usam APENAS variáveis daqui.
+   ================================================================ */
 
 :root {
   /* ── MARCA / PRIMÁRIA ───────────────────── */
-  --c-primary:          #000000;   
+  --c-primary:          #7c3aed;
   --c-primary-hover:    #6d28d9;
   --c-primary-light:    #ede9fe;
   --c-primary-mid:      #a78bfa;
   --c-primary-dark:     #4c1d95;
 
   /* ── ACENTO ─────────────────────────────── */
-  --c-accent:           #f59e0b;  
+  --c-accent:           #f59e0b;
   --c-accent-light:     #fef3c7;
 
   /* ── GANHO ──────────────────────────────── */
-  --c-gain:             #10b981;   
+  --c-gain:             #10b981;
   --c-gain-hover:       #059669;
   --c-gain-light:       #d1fae5;
-  --c-gain-shadow:      rgba(16, 185, 129, 0.25);
-  --c-gain-shadow-btn:  rgba(16, 185, 129, 0.30);
+  --c-gain-shadow:      rgba(16,185,129,0.25);
+  --c-gain-shadow-btn:  rgba(16,185,129,0.30);
 
   /* ── DESPESA ─────────────────────────────── */
-  --c-expense:          #ef4444;   
+  --c-expense:          #ef4444;
   --c-expense-hover:    #dc2626;
   --c-expense-light:    #fee2e2;
-  --c-expense-shadow:   rgba(239, 68, 68, 0.25);
-  --c-expense-shadow-btn: rgba(239, 68, 68, 0.30);
+  --c-expense-shadow:   rgba(239,68,68,0.25);
+  --c-expense-shadow-btn: rgba(239,68,68,0.30);
 
   /* ── SUPERFÍCIES ────────────────────────── */
-  --c-bg:               #f5f3ff;   /* fundo geral levemente roxo */
+  --c-bg:               #f5f3ff5b;
   --c-surface:          #ffffff;
   --c-surface-2:        #faf9ff;
-  --c-sidebar-bg:       #5d00ff;   /* sidebar roxa sólida */
-  --c-sidebar-text:     rgba(255,255,255,0.85);
-  --c-sidebar-active:   rgba(255,255,255,0.15);
-  --c-sidebar-hover:    rgba(255,255,255,0.10);
+
+  /* ── SIDEBAR ────────────────────────────── */
+  --c-sidebar-bg:           #FFFFFF;
+  --c-sidebar-grad-start:   #7c3aed;
+  --c-sidebar-grad-mid:     #6d28d9;
+  --c-sidebar-grad-end:     #5b21b6;
+  --c-sidebar-text:         rgba(0, 0, 0, 0.85);
+  --c-sidebar-active:       rgba(255,255,255,0.15);
+  --c-sidebar-active-ring:  rgba(255,255,255,0.15);
+  --c-sidebar-hover:        rgba(255,255,255,0.10);
+  --c-sidebar-hover-lg:     rgba(255,255,255,0.18);
+  --c-sidebar-deco-1:       rgba(255,255,255,0.06);
+  --c-sidebar-deco-2:       rgba(255,255,255,0.04);
+  --c-sidebar-divider:      rgba(255,255,255,0.12);
+  --c-sidebar-divider-sm:   rgba(255,255,255,0.10);
+  --c-sidebar-subtitle:     rgba(255,255,255,0.55);
+  --c-sidebar-description:  rgba(255,255,255,0.50);
+  --c-sidebar-nav-label:    rgba(255,255,255,0.40);
+  --c-sidebar-arrow:        rgba(255,255,255,0.60);
+  --c-sidebar-btn-bg:       rgba(255,255,255,0.10); 
+  --c-sidebar-btn-border:   rgba(255,255,255,0.15);
+
+  /* ── OVERLAY ────────────────────────────── */
+  --c-overlay:          rgba(0,0,0,0.40);
 
   /* ── BORDAS ─────────────────────────────── */
   --c-border:           #e5e1f8;
   --c-border-focus:     var(--c-primary);
 
+  /* ── BOTÕES AÇÃO ─────────────────────────── */
+  --c-btn-edit-bg:       rgba(124,58,237,0.10);
+  --c-btn-edit-border:   rgba(124,58,237,0.20);
+  --c-btn-delete-border: rgba(239,68,68,0.20);
+
   /* ── TEXTO ──────────────────────────────── */
-  --c-text-heading:     #1e1b4b;
-  --c-text-body:        #374151;
+  --c-text-heading:     #000000;
+  --c-text-body:        #000000;
   --c-text-muted:       #9ca3af;
-  --c-text-white:       #ffffff;
+  --c-text-white:       rgba(50, 49, 49, 0.85);
 
   /* ── FEEDBACK ───────────────────────────── */
   --c-success:          #10b981;
@@ -88,14 +119,14 @@
   --text-3xl:  1.875rem;
 
   /* ── LAYOUT ─────────────────────────────── */
-  --sidebar-width:         240px;
-  --sidebar-width-mobile:  100%;
-  --topbar-height:         64px;
+  --sidebar-width:        240px;
+  --sidebar-width-mobile: 100%;
+  --topbar-height:        64px;
 
   /* ── TRANSIÇÕES ─────────────────────────── */
-  --transition-fast:   all 0.15s ease;
-  --transition:        all 0.2s ease;
-  --transition-slow:   all 0.35s ease;
+  --transition-fast: all 0.15s ease;
+  --transition:      all 0.2s ease;
+  --transition-slow: all 0.35s ease;
 }
 
 /* ── RESET BASE ──────────────────────────── */
@@ -120,23 +151,9 @@ body {
   min-height: 100dvh;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+a  { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+input, select, textarea { font-family: inherit; }
+img { max-width: 100%; display: block; }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-input,
-select,
-textarea {
-  font-family: inherit;
-}
-
-img {
-  max-width: 100%;
-  display: block;
-}
+  /* ── AUTH (tokens adicionados via append) ─ */

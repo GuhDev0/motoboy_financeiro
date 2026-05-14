@@ -1,0 +1,481 @@
+/* ================================================================
+   DASHBOARD — dashboard.css
+   Zero cores hardcoded. Todos os valores vêm de globals.css.
+   ================================================================ */
+
+/* ── CONTAINER ───────────────────────────── */
+.dashboard {
+  padding: var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  animation: pageIn 0.4s ease both;
+}
+
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── HEADER ──────────────────────────────── */
+.dashboard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.dashboard__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  color: var(--c-text-heading);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.dashboard__title span {
+  color: var(--c-primary);
+}
+
+.dashboard__subtitle {
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+  margin-top: var(--space-1);
+}
+
+.dashboard__date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-pill);
+  font-size: var(--text-sm);
+  color: var(--c-text-muted);
+  font-weight: 500;
+  box-shadow: var(--shadow-xs);
+  white-space: nowrap;
+}
+
+/* ── GRID DE CARDS MÉTRICA ────────────────── */
+.dashboard__metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.metric-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-xs);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Linha de cor no topo */
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+
+.metric-card--primary::before  { background: var(--c-primary); }
+.metric-card--gain::before     { background: var(--c-gain); }
+.metric-card--expense::before  { background: var(--c-expense); }
+.metric-card--accent::before   { background: var(--c-accent); }
+
+.metric-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metric-card__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+
+.metric-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.metric-card--primary .metric-card__icon  { background: var(--c-primary-light); }
+.metric-card--gain .metric-card__icon     { background: var(--c-gain-light); }
+.metric-card--expense .metric-card__icon  { background: var(--c-expense-light); }
+.metric-card--accent .metric-card__icon   { background: var(--c-accent-light); }
+
+.metric-card__value {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--c-text-heading);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.metric-card__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 2px var(--space-2);
+  border-radius: var(--r-pill);
+}
+
+.metric-card__delta--up {
+  background: var(--c-gain-light);
+  color: var(--c-gain);
+}
+
+.metric-card__delta--down {
+  background: var(--c-expense-light);
+  color: var(--c-expense);
+}
+
+/* ── GRID MEIO ───────────────────────────── */
+.dashboard__mid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+/* ── CARD GENÉRICO ───────────────────────── */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-xs);
+}
+
+.card__header {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--c-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--c-text-heading);
+  letter-spacing: -0.01em;
+}
+
+.card__badge {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 2px var(--space-3);
+  border-radius: var(--r-pill);
+  background: var(--c-primary-light);
+  color: var(--c-primary);
+}
+
+.card__body {
+  padding: var(--space-6);
+}
+
+/* ── GRÁFICO DE BARRAS (CSS puro) ─────────── */
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bar-chart__row {
+  display: grid;
+  grid-template-columns: 80px 1fr 70px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.bar-chart__label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--c-text-muted);
+  text-align: right;
+}
+
+.bar-chart__track {
+  height: 10px;
+  background: var(--c-border);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.bar-chart__fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--c-primary);
+  transition: width 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.bar-chart__fill--gain    { background: var(--c-gain); }
+.bar-chart__fill--expense { background: var(--c-expense); }
+
+.bar-chart__value {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--c-text-heading);
+}
+
+/* ── RESUMO RÁPIDO ───────────────────────── */
+.quick-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.quick-summary__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--r-md);
+  background: var(--c-surface-2);
+  border: 1px solid var(--c-border);
+  transition: var(--transition-fast);
+}
+
+.quick-summary__item:hover {
+  border-color: var(--c-primary-mid);
+  background: var(--c-primary-light);
+}
+
+.quick-summary__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.quick-summary__dot--gain    { background: var(--c-gain); }
+.quick-summary__dot--expense { background: var(--c-expense); }
+.quick-summary__dot--balance { background: var(--c-primary); }
+
+.quick-summary__info { flex: 1; }
+
+.quick-summary__name {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quick-summary__amount {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--c-text-heading);
+}
+
+.quick-summary__amount--gain    { color: var(--c-gain); }
+.quick-summary__amount--expense { color: var(--c-expense); }
+
+/* ── TABELA DE GANHOS POR SEMANA ──────────── */
+.dashboard__table-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.week-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.week-table thead {
+  background: var(--c-surface-2);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.week-table th {
+  padding: var(--space-4) var(--space-5);
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+  white-space: nowrap;
+}
+
+.week-table th:last-child,
+.week-table td:last-child {
+  text-align: right;
+}
+
+.week-table td {
+  padding: var(--space-4) var(--space-5);
+  color: var(--c-text-body);
+  border-bottom: 1px solid var(--c-border);
+  vertical-align: middle;
+}
+
+.week-table tbody tr:last-child td { border-bottom: none; }
+
+.week-table tbody tr { transition: var(--transition-fast); }
+
+.week-table tbody tr:hover { background: var(--c-surface-2); }
+
+/* Semana label */
+.week-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--c-text-heading);
+  font-size: var(--text-sm);
+}
+
+.week-range {
+  font-size: var(--text-xs);
+  color: var(--c-text-muted);
+  margin-top: 2px;
+}
+
+/* Mini barra inline */
+.week-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 140px;
+}
+
+.week-bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--c-border);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+.week-bar-fill {
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--c-gain);
+  transition: width 0.5s ease;
+}
+
+.week-bar-pct {
+  font-size: var(--text-xs);
+  color: var(--c-text-muted);
+  font-weight: 500;
+  width: 34px;
+  text-align: right;
+}
+
+/* Valores */
+.val-gain    { color: var(--c-gain);    font-weight: 700; font-family: var(--font-display); }
+.val-expense { color: var(--c-expense); font-weight: 700; font-family: var(--font-display); }
+.val-balance-pos { color: var(--c-gain);    font-weight: 700; font-family: var(--font-display); }
+.val-balance-neg { color: var(--c-expense); font-weight: 700; font-family: var(--font-display); }
+
+/* Badge plataforma no resumo */
+.platform-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.platform-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: var(--r-pill);
+  background: var(--c-primary-light);
+  color: var(--c-primary);
+  letter-spacing: 0.04em;
+}
+
+/* Linha total */
+.week-table tfoot td {
+  padding: var(--space-4) var(--space-5);
+  background: var(--c-surface-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--c-text-heading);
+  border-top: 2px solid var(--c-border);
+}
+
+/* ── RESPONSIVO ──────────────────────────── */
+@media (max-width: 1100px) {
+  .dashboard__metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .dashboard__mid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .dashboard {
+    padding: var(--space-5) var(--space-4);
+    gap: var(--space-5);
+  }
+  .dashboard__metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+  }
+  .metric-card {
+    padding: var(--space-4);
+  }
+  .metric-card__value {
+    font-size: var(--text-xl);
+  }
+  .card__body {
+    padding: var(--space-4);
+  }
+  .week-bar-wrap {
+    min-width: 80px;
+  }
+  .week-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .dashboard__title {
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (max-width: 440px) {
+  .dashboard__metrics {
+    grid-template-columns: 1fr;
+  }
+}
