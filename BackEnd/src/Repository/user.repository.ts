@@ -1,11 +1,11 @@
-import { prisma } from "../lib/prisma.js"; 
-import type{ User } from "@prisma/client";
-import  type { CreateUserDTO }   from "../dto/UserDTO.js";
+import { prisma } from "../lib/prisma.js";
+import type { User } from "@prisma/client";
+import type { CreateUserDTO } from "../dto/UserDTO.js";
 
 
 type UpdateUserDTO = Partial<CreateUserDTO>;
 
-export  class UserRepository {
+export class UserRepository {
   async create(data: CreateUserDTO): Promise<User> {
     return prisma.user.create({
       data,
@@ -23,9 +23,15 @@ export  class UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    return prisma.user.findUnique({
+
+    const user = await prisma.user.findUnique({
       where: { email },
+
     });
+    if (!user) {
+      throw new Error("Usuário não encontrado");
+    }
+    return user;
   }
 
   async update(id: number, data: UpdateUserDTO): Promise<User> {
