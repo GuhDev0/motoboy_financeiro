@@ -1,21 +1,24 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 export const ENDPOINTS = {
-  LOGIN: "http://localhost:3001/financeiroMotoboy/login",
-  REGISTER_USER: "http://localhost:3001/financeiroMotoboy/createdUser",
+  LOGIN: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/login`,
+  REGISTER_USER: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/createdUser`,
 
   // Gain
-  GAIN_REGISTER: "http://localhost:3001/financeiroMotoboy/createGain",
-  GAIN_LIST: "http://localhost:3001/financeiroMotoboy/gains",
-  GAIN_DETAIL: "http://localhost:3001/financeiroMotoboy/gain",
-  GAIN_UPDATE: "http://localhost:3001/financeiroMotoboy/updateGain",
-  GAIN_DELETE: "http://localhost:3001/financeiroMotoboy/deleteGain",
+  GAIN_REGISTER: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/createGain`,
+  GAIN_LIST: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/gains`,
+  GAIN_DETAIL: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/gain`,
+  GAIN_UPDATE: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/updateGain`,
+  GAIN_DELETE: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/deleteGain`,
 
   // Expense
-  EXPENSE_REGISTER: "http://localhost:3001/financeiroMotoboy/createExpense",
-  EXPENSE_LIST: "http://localhost:3001/financeiroMotoboy/expenses",
-  EXPENSE_DETAIL: "http://localhost:3001/financeiroMotoboy/expense",
-  EXPENSE_UPDATE: "http://localhost:3001/financeiroMotoboy/updateExpense",
-  EXPENSE_DELETE: "http://localhost:3001/financeiroMotoboy/deleteExpense",
+  EXPENSE_REGISTER: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/createExpense`,
+  EXPENSE_LIST: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/expenses`,
+  EXPENSE_DETAIL: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/expense`,
+  EXPENSE_UPDATE: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/updateExpense`,
+  EXPENSE_DELETE: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/deleteExpense`,
   // Analise
-  ANALISE: "http://localhost:3001/financeiroMotoboy/analise"
+  ANALISE: `${process.env.NEXT_PUBLIC_API_URL}/financeiroMotoboy/analise`
 
 };
