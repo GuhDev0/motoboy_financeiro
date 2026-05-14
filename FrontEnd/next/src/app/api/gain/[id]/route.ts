@@ -7,15 +7,22 @@ const getToken = async () => {
   return cookieStore.get("authToken")?.value;
 };
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
+    const { id } = await context.params;
     const token = await getToken();
 
     if (!token) {
-      return NextResponse.json({ error: "Não autenticado" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Não autenticado" },
+        { status: 401 }
+      );
     }
 
-    const response = await fetch(`${ENDPOINTS.GAIN_DETAIL}/${params.id}`, {
+    const response = await fetch(`${ENDPOINTS.GAIN_DETAIL}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -32,7 +39,10 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     return NextResponse.json({ gain: data.gain ?? data });
   } catch (error: any) {
-    return NextResponse.json({ erro: error.message }, { status: 500 });
+    return NextResponse.json(
+      { erro: error.message },
+      { status: 500 }
+    );
   }
 }
 
